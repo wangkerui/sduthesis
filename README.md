@@ -37,9 +37,12 @@ SduThesis 是山东大学学位论文 LaTeX 模板，全面支持硕士、有点
 2. 将sduthesis.cls, sduthesis.cfg, sdubib.bst作相应替换即可。
 
 
-======================================
-Makefile Howto (by edyfox & littleleo)
-======================================
+==============
+Makefile Howto 
+==============
+-----------------------------
+(by edyfox & littleleo & wkr)
+-----------------------------
 1. 获取帮助文档
 
    make doc   得到 sduthesis.pdf，帮助文档，里面有详细的说明。
@@ -93,4 +96,4 @@ Release Notes
 ========
 ![](http://wangkerui.com/sducover.jpg)
 
-# $Id: 2014-05-05 13:19:21 Wang Kerui (wkr@wangkerui.com) stole from littleleo $
+$Id: 2014-05-05 13:19:21 Wang Kerui (wkr@wangkerui.com) stole from littleleo $

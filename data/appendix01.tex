@@ -1,0 +1,74 @@
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../main"
+%%% End: 
+
+\chapter{特殊浮动对象}
+\echapter{Special Float Object}
+\label{cha:speobj}
+如果附录中的公式不想让它出现在公式索引中，那就请用 \verb|\tag*{xxx}|
+
+\begin{equation}\tag*{(123)} 
+\left\{\begin{array}{l}
+\max \,\,f(x)\\[0.1 cm]
+\mbox{subject to:} \\ [0.1 cm]
+\qquad g_j(x)\le 0,\quad j=1,2,\cdots,p
+\end{array}\right.
+\end{equation}
+
+\begin{table}[ht]
+  \centering
+  \caption*{Table~111\hskip1em This is an example for manually numbered table, which
+    would not appear in the list of tables}
+  \label{tab:badtabular2}
+  \begin{tabular}[c]{|c|m{0.8in}|c|c|c|c|c|}\hline
+    \multicolumn{2}{|c|}{Network Topology} & \# of nodes & 
+    \multicolumn{3}{c|}{\# of clients} & Server \\\hline
+    GT-ITM & Waxman Transit-Stub & 600 &
+    \multirow{2}{2em}{2\%}& 
+    \multirow{2}{2em}{10\%}& 
+    \multirow{2}{2em}{50\%}& 
+    \multirow{2}{1.2in}{Max. Connectivity}\\\cline{1-3}
+    \multicolumn{2}{|c|}{Inet-2.1} & 6000 & & & &\\\hline
+    \multirow{2}{1in}{blahblah} & jin  & jin &\multicolumn{4}{c|}{\multirow{2}*{\sduthesis}}\\\cline{2-3}
+    & \multicolumn{2}{c|}{ABCDEF} &\multicolumn{4}{c|}{} \\\hline
+\end{tabular}  
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{lrt}
+  \caption*{Figure~123\hskip1em This is an example for manually numbered figure,
+    which would not appear in the list of figures}
+  \label{tab:badfigure2}    
+\end{figure}
+
+\begin{table}[ht]
+\centering
+  \centering
+  \caption*{表~222\hskip1em 这是手动编号但不出现在索引中的表格例子}
+  \label{tab:badtabular3}
+  \begin{tabular}[c]{|c|m{0.8in}|c|c|c|c|c|}\hline
+    \multicolumn{2}{|c|}{Network Topology} & \# of nodes & 
+    \multicolumn{3}{c|}{\# of clients} & Server \\\hline
+    GT-ITM & Waxman Transit-Stub & 600 &
+    \multirow{2}{2em}{2\%}& 
+    \multirow{2}{2em}{10\%}& 
+    \multirow{2}{2em}{50\%}& 
+    \multirow{2}{1.2in}{Max. Connectivity}\\\cline{1-3}
+    \multicolumn{2}{|c|}{Inet-2.1} & 6000 & & & &\\\hline
+    \multirow{2}{1in}{blah} & blah  & jin &\multicolumn{4}{c|}{\multirow{2}*{\sduthesis}}\\\cline{2-3}
+    & \multicolumn{2}{c|}{ABCDEF} &\multicolumn{4}{c|}{} \\\hline
+\end{tabular}  
+\end{table}
+
+\begin{figure}[!htbp]
+  \centering
+  \includegraphics[width=\textwidth]{lrt}
+  \caption*{图~321\hskip1em 这是手动编号但不出现索引中的图片例子}
+  \label{tab:badfigure3}    
+\end{figure}
+
+%%%
+%%% End of File
+%%%

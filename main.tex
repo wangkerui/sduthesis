@@ -1,0 +1,81 @@
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: null
+%%% End:
+
+\documentclass[master,secret]{sduthesis}
+% \documentclass[%
+%   master|doctor,              % mandatory option
+%   xetex|pdftex|dvips|dvipdfm, % optional
+%   secret,                     % optional
+%   equival,engineer            % optional
+%   openany|openright,          % optional
+%   arial,arialtoc,arialtitle   % optional
+% ]{sduthesis}
+
+% 用到的宏包都统一放到了sdutils中，
+% 可以根据自己的实际在sdutils.sty中添加或者删除。
+\usepackage{sdutils}
+
+\begin{document}
+% 图片目录
+\graphicspath{{fig/}}
+
+
+%%% 1.前序部分
+\frontmatter
+% 封面，博士有英文封面
+\input{data/cover}
+\makecover
+
+% 原创性声明和关于学位论文使用授权的声明
+\input{data/statement}
+\makestatement
+
+% 目录
+\begin{contents}
+\tableofcontents%  中文目录
+\tableofecontents% 英文目录
+\end{contents}
+
+% 摘要（包括中文摘要和英文摘要）
+\input{data/abstract}
+
+% 符号说明
+\include{data/denotation}
+
+
+%%% 2.正文部分
+\mainmatter
+\include{data/chap01}
+\include{data/chap02}
+
+
+%%% 3.后续部分
+\backmatter
+% 附录
+\begin{appendix}
+\include{data/appendix01}
+\include{data/appendix02}
+\end{appendix}
+
+% 参考文献
+\bibliographystyle{sdubib}
+\bibliography{ref/kungfu}
+
+% 致谢
+\include{data/ack}
+
+% 攻读学位期间发表的学术论文/参与的科研项目
+\include{data/resume}
+
+% 表格、插图、公式索引。带*的版本不生成目录项
+% 山东大学没有索引的要求，Just in case.
+%\listoftables
+%\listoffigures
+%\listofequations*
+
+\end{document}
+%%%
+%%% End of 'main.tex'
+%%%

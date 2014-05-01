@@ -1,0 +1,45 @@
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: ../main.tex
+%%% End:
+
+% \e<sectionlevel> (如 \echapter, \esection, \esubsection) 用于生成英文目录
+\chapter{一级标题}
+\echapter{English Chapter Name}
+\label{cha:cha}
+示例章节命令和参考文献的用法。注意：本文档仅是示例，请一定先阅读详细的说明文档 sduthesis.pdf 。
+
+
+\section{二级标题}
+\esection{English Section Name}
+这是二级标题。
+
+所有级别的标题都可以使用带 e 的版本生成英文目录（四级标题除外）。
+
+\subsection{三级标题}
+\esubsection{English Subsection Name}
+这是三级标题。
+
+\subsubsection{四级标题}
+\esubsubsection{Si Ji Biao Ti}
+四级标题不会出现在目录中。
+
+另外，上述标题带 * 号的版本都不带编号，不计入目录。
+
+\subsubsection*{starsubsubsection}
+本节是带 * 号版本的例子。
+
+
+\section{引用用法}
+\esection{References}
+参考文献有两种用法：一是上标模式，如这是上标模式\cite{cnproceed}，二是正文模式，如文献\onlinecite{cnarticle}指出...。
+
+\section{本文的结构}
+\esection{Paper Structure}
+本文第\ref{cha:cha}章示例章节命令和参考文献的用法。
+
+本文第\ref{cha:example}章示例正文的用法，如插图和表格，公式和算法，定义、定理和证明环境等。
+
+%%%
+%%% End of File
+%%%

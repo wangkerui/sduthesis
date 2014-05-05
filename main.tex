@@ -3,7 +3,7 @@
 %%% TeX-master: null
 %%% End:
 
-\documentclass[master,secret]{sduthesis}
+\documentclass[master]{sduthesis}
 % \documentclass[%
 %   master|doctor,              % mandatory option
 %   xetex|pdftex|dvips|dvipdfm, % optional
@@ -68,6 +68,9 @@
 
 % 攻读学位期间发表的学术论文/参与的科研项目
 \include{data/resume}
+
+% 学位论文评阅及答辩情况表
+\makeevaluation
 
 % 表格、插图、公式索引。带*的版本不生成目录项
 % 山东大学没有索引的要求，Just in case.

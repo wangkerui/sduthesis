@@ -137,6 +137,7 @@
 \RequirePackage[amsmath,thmmarks,hyperref]{ntheorem}
 \RequirePackage{array}
 \RequirePackage{longtable}
+\RequirePackage{multirow}
 \RequirePackage{booktabs}
 \RequirePackage[numbers,super,sort&compress]{natbib}
 \RequirePackage{hyperref}
@@ -256,11 +257,25 @@
   \def\@evenfoot{\wuhao\thepage\hfil}}
 \def\ps@sdu@headings{%
   \def\@oddhead{\vbox to\headheight{%
-    \hb@xt@\textwidth{\hfill\wuhao\song\headmark\hfill}%
-      \vskip2pt\hbox{\vrule width\textwidth height0.4pt depth0pt}}}
+    \hb@xt@\textwidth{\hfill\ifsdu@doctor\xiaosi\else\wuhao\fi\song\headmark\hfill}%
+      \vskip2pt%
+      \ifsdu@doctor
+        \hbox{\vrule width\textwidth height2.4pt depth0pt}%
+        \vskip 1pt%
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \else
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \fi}}
   \def\@evenhead{\vbox to\headheight{%
-    \hb@xt@\textwidth{\hfill\wuhao\song\headmark\hfill}%
-      \vskip2pt\hbox{\vrule width\textwidth height0.4pt depth0pt}}}
+    \hb@xt@\textwidth{\hfill\ifsdu@doctor\xiaosi\else\wuhao\fi\song\headmark\hfill}%
+      \vskip2pt
+      \ifsdu@doctor
+        \hbox{\vrule width\textwidth height2.4pt depth0pt}%
+        \vskip 1pt%
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \else
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \fi}}
   \def\@oddfoot{\hfil\wuhao\thepage}
   \def\@evenfoot{\wuhao\thepage\hfil}}
 \def\CJKindent{%
@@ -723,6 +738,59 @@
    {\def\@noitemerr
      {\@latex@warning{Empty `thebibliography' environment}}%
     \endlist\frenchspacing}
+\newcommand{\sdu@evaluationtitle}{学位论文评阅及答辩情况表}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\newcommand{\makeevaluation}{%
+\let\@tabular\old@tabular
+\begin{titlepage}
+ \chapter[]{\sdu@evaluationtitle}
+ \fangsong\sihao
+ \begin{table}[ht]
+\begin{tabular*}{\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{4.2em-0.45pt}<{\centering}|p{4em}|p{4em}|p{4em}|m{4em}<{\centering}|p{4em}<{\centering}|}
+\hline
+\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{所~在~单~位} & 总体评价※ \\
+ \cline{2-8}
+ & \multicolumn{2}{c|}{} &  & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+\hline
+\multirow{10}{*}{\tabincell{c}{\\ \\ 答\\辩\\委\\员\\会\\成\\员}} &\multicolumn{2}{c|}{姓\qquad名} & 专业技术职\quad\quad 务 & 是否博导（硕导） & \multicolumn{3}{c|}{所~在~单~位} \\
+ \cline{2-8}
+ & 主席 & & \rule{0pt}{21pt} &  &  \multicolumn{3}{c|}{}  \\
+ \cline{2-8}
+ & \multirow{8}{*}{\tabincell{c}{\\ 委\\  \\ \\ \\员}}& & \rule{0pt}{21pt} &  &   \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+  \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+\hline
+\multicolumn{3}{|c|}{\tabincell{c}{答辩委员会对论\\ 文的总体评价※}} & & 答辩秘书 &  & 答辩日期 &  \\
+\hline
+\multicolumn{2}{|c|}{备注} & \multicolumn{6}{c|}{} \\
+\hline
+\end{tabular*}
+ \end{table}
+ \vspace{0cm}\nopagebreak
+ \parindent 0em\fs\wuhao{※优秀为``A''；良好为``B''；合格为``C''；不合格为``D''。}
+\end{titlepage}
+\let\@tabular\sdu@tabular
+}
 \def\sdu@starttoc#1{% #1: float type, prepend type name in \listof*** entry.
   \let\oldnumberline\numberline
   \def\numberline##1{\oldnumberline{\csname #1name\endcsname\hskip.4em ##1}}

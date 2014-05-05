@@ -25,7 +25,7 @@
 %
 % \fi
 %
-% \CheckSum{2012}
+% CheckSum{2012}
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -1159,6 +1159,7 @@
 %    \begin{macrocode}
 \RequirePackage{array}
 \RequirePackage{longtable}
+\RequirePackage{multirow}
 %    \end{macrocode}
 %
 % 使用三线表：\cs{toprule}，\cs{midrule}，\cs{bottomrule}。
@@ -1478,11 +1479,25 @@
   \def\@evenfoot{\wuhao\thepage\hfil}}
 \def\ps@sdu@headings{%
   \def\@oddhead{\vbox to\headheight{%
-    \hb@xt@\textwidth{\hfill\wuhao\song\headmark\hfill}%
-      \vskip2pt\hbox{\vrule width\textwidth height0.4pt depth0pt}}}
+    \hb@xt@\textwidth{\hfill\ifsdu@doctor\xiaosi\else\wuhao\fi\song\headmark\hfill}%
+      \vskip2pt%
+      \ifsdu@doctor
+        \hbox{\vrule width\textwidth height2.4pt depth0pt}%
+        \vskip 1pt%
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \else
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \fi}}
   \def\@evenhead{\vbox to\headheight{%
-    \hb@xt@\textwidth{\hfill\wuhao\song\headmark\hfill}%
-      \vskip2pt\hbox{\vrule width\textwidth height0.4pt depth0pt}}}
+    \hb@xt@\textwidth{\hfill\ifsdu@doctor\xiaosi\else\wuhao\fi\song\headmark\hfill}%
+      \vskip2pt
+      \ifsdu@doctor
+        \hbox{\vrule width\textwidth height2.4pt depth0pt}%
+        \vskip 1pt%
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \else
+        \hbox{\vrule width\textwidth height0.4pt depth0pt}%
+      \fi}}
   \def\@oddfoot{\hfil\wuhao\thepage}
   \def\@evenfoot{\wuhao\thepage\hfil}}
 %</cls>
@@ -1749,9 +1764,12 @@
 \newcommand\CJKthepart{\CJKnumber{\@arabic\c@part}}
 \newcommand\CJKprechaptername{第}
 \newcommand\CJKchaptername{章}
-\newcommand\CJKthechapter{\@arabic\c@chapter}%              <-- 数字章序号，如1，2，3
-%\newcommand\CJKthechapter{\CJKnumber{\@arabic\c@chapter}}% <-- 大写章序号，如一，二，三
-\renewcommand\chaptername{\CJKprechaptername~\CJKthechapter~\CJKchaptername}
+\ifsdu@doctor
+  \newcommand\CJKthechapter{\CJKnumber{\@arabic\c@chapter}}% <-- 大写章序号，如一，二，三
+\else
+  \newcommand\CJKthechapter{~\@arabic\c@chapter~}%              <-- 数字章序号，如1，2，3
+\fi
+\renewcommand\chaptername{\CJKprechaptername\CJKthechapter\CJKchaptername}
 \renewcommand\appendixname{附录}
 \newcommand\eappendixname{Appendix}
 \ifsdu@master
@@ -2444,6 +2462,71 @@
 % \subsubsection{致谢、论文/项目情况}
 % \label{sec:ack}
 % 分别参考示例文档data/ack.tex和data/resume.tex。
+%
+%
+% \subsubsection{学位论文评阅及答辩情况表}
+% \label{sec:eval}
+% 本小节代码来自王伊蕾师姐，在此表示感谢。
+%
+% \begin{macro}{\makeevaluation}
+%    \begin{macrocode}
+%<*cls>
+\newcommand{\sdu@evaluationtitle}{学位论文评阅及答辩情况表}
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\newcommand{\makeevaluation}{%
+\let\@tabular\old@tabular
+\begin{titlepage}
+ \chapter[]{\sdu@evaluationtitle}
+ \fangsong\sihao
+ \begin{table}[ht]
+\begin{tabular*}{\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{4.2em-0.45pt}<{\centering}|p{4em}|p{4em}|p{4em}|m{4em}<{\centering}|p{4em}<{\centering}|}
+\hline
+\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{所~在~单~位} & 总体评价※ \\
+ \cline{2-8}
+ & \multicolumn{2}{c|}{} &  & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+ \cline{2-8}
+ &  \multicolumn{2}{c|}{} & & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
+\hline
+\multirow{10}{*}{\tabincell{c}{\\ \\ 答\\辩\\委\\员\\会\\成\\员}} &\multicolumn{2}{c|}{姓\qquad名} & 专业技术职\quad\quad 务 & 是否博导（硕导） & \multicolumn{3}{c|}{所~在~单~位} \\
+ \cline{2-8}
+ & 主席 & & \rule{0pt}{21pt} &  &  \multicolumn{3}{c|}{}  \\
+ \cline{2-8}
+ & \multirow{8}{*}{\tabincell{c}{\\ 委\\  \\ \\ \\员}}& & \rule{0pt}{21pt} &  &   \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+  \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+ \cline{3-8}
+ &  & & \rule{0pt}{21pt} &  & \multicolumn{3}{c|}{} \\
+\hline
+\multicolumn{3}{|c|}{\tabincell{c}{答辩委员会对论\\ 文的总体评价※}} & & 答辩秘书 &  & 答辩日期 &  \\
+\hline
+\multicolumn{2}{|c|}{备注} & \multicolumn{6}{c|}{} \\
+\hline
+\end{tabular*}
+ \end{table}
+ \vspace{0cm}\nopagebreak
+ \parindent 0em\fs\wuhao{※优秀为``A''；良好为``B''；合格为``C''；不合格为``D''。}
+\end{titlepage}
+\let\@tabular\sdu@tabular
+}
+%</cls>
+%    \end{macrocode}
+% \end{macro}
 %
 %
 % \subsubsection{插图、表格和公式索引}

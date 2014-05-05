@@ -2,7 +2,7 @@
 # $Id$
 
 EXAMPLE_FILES="main.tex main.pdf sdutils.sty Makefile"
-TEMPLATE_FILES="sduthesis.ins sduthesis.dtx sdubib.bst Readme sduthesis.pdf sduthesis.cls sduthesis.cfg"
+TEMPLATE_FILES="sduthesis.ins sduthesis.dtx sdubib.bst README.md sduthesis.pdf sduthesis.cls sduthesis.cfg"
 ALL_FILES="$EXAMPLE_FILES $TEMPLATE_FILES"
 ALL_DIRS="data fig ref"
 

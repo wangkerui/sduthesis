@@ -1,5 +1,6 @@
-% BibTeX standard bibliography style `thubib.bst' derived from `unsrt'
-% This file is part of `thuthesis' package.
+% BibTeX standard bibliography style `sdubib.bst' stole from `thubib.bst'
+% which derived from `unsrt'
+% This file is part of `sduthesis' package.
 %
 % $Id$
 

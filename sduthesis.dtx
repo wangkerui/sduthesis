@@ -25,7 +25,7 @@
 %
 % \fi
 %
-% CheckSum{2012}
+% \CheckSum{2169}
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -374,8 +374,7 @@
 % 
 % 
 % %%% 1.前序部分
-% \frontmatter
-% % 封面，博士有英文封面
+% % 封面（博士有英文封面）
 % \input{data/cover}
 % \makecover
 % 
@@ -384,11 +383,10 @@
 % \makestatement
 % 
 % % 目录
-% \begin{contents}
 % \tableofcontents%  中文目录
 % \tableofecontents% 英文目录
-% \end{contents}
 % 
+% \frontmatter
 % % 摘要（包括中文摘要和英文摘要）
 % \input{data/abstract}
 % 
@@ -490,7 +488,7 @@
 %  目录项（章目录项除外）中的英文是否用 arial 字体。模板默认关闭。
 %
 % \item[arialtitle]
-%  章节标题中英文是否用 arial 字体。本选项不用用户操心，模板默认打开。
+%  章节标题中英文是否用 arial 字体。本选项不用用户操心，模板默认关闭。
 % \end{description}
 %
 % \subsection{字体配置}
@@ -919,6 +917,8 @@
 % \label{sec:thanks}
 % 感谢清华大学薛瑞尼老师撰写的 \thuthesis{} 和 thuthesis.pdf，\sduthesis{} 完全继承自 \thuthesis{}，做了``山大化''处理，而 sduthesis.pdf（本文档）完全从 thuthesis.pdf 修改而来。
 % 
+% 感谢王伊蕾师姐提供的学位论文评阅及答辩情况表格代码，和外文论文排版代码，以及对博士格式的悉心校对。
+% 
 % 本模板全力支持硕士论文；本模板想要支持博士论文，但目前还没有博士使用过，很多格式都没有和规范比对；本模板不想要支持博士后出站报告，因为目标用户太少；本模板拒绝支持本科论文，因为已有另一个Github项目存在。
 %
 % 本人马上就要离开山东大学，硕士学位论文即是用此模板完成的。毕业后，本人维护此模板的时间和精力必然非常有限，希望有志于此的山大人能够接手维护下去，为同学服务。
@@ -1010,7 +1010,7 @@
 % \cs{ExecuteOptions} 的参数之间用逗号分割，不能有空格。开始不知道，折腾了老半
 % 天。
 %    \begin{macrocode}
-\ExecuteOptions{utf,arialtitle}
+\ExecuteOptions{utf}
 \ProcessOptions\relax
 \LoadClass[12pt,a4paper]{book}
 %    \end{macrocode}
@@ -1410,8 +1410,8 @@
 %    \begin{macrocode}
 \renewcommand\normalsize{%
   \song\xiaosi[1.5]\selectfont 
-  \abovedisplayskip=0bp \@plus 2bp \@minus 2bp
-  \abovedisplayshortskip=0bp \@plus 2bp \@minus 2bp
+  \abovedisplayskip=10bp \@plus 2bp \@minus 2bp
+  \abovedisplayshortskip=10bp \@plus 2bp \@minus 2bp
   \belowdisplayskip=\abovedisplayskip
   \belowdisplayshortskip=\abovedisplayshortskip}
 %</cls>
@@ -1808,8 +1808,10 @@
 % 后空 17 磅。
 %    \begin{macrocode}
 \renewcommand\chapter{%
-  \if@openright\cleardoublepage\else\clearpage\fi\phantomsection%
-  \global\@topnum\z@%
+  \ifsdu@doctor\if@openright\cleardoublepage\else\clearpage\fi%
+  \else\clearpage\fi%
+ \phantomsection%
+ \global\@topnum\z@%
   \@afterindenttrue%
   \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{%
@@ -1828,6 +1830,7 @@
 \def\@makechapterhead#1{%
   {\parindent \z@ \centering
     \fontseries{b}\hei\xiaosan[1.5]\csname sdu@title@font\endcsname
+    \vspace*{-17bp}
     \ifnum \c@secnumdepth >\m@ne
        \if@mainmatter
           \@chapapp\hskip1em
@@ -1842,11 +1845,13 @@
 }
 \def\@makeschapterhead#1{%
   {\parindent \z@ \centering
+    \vspace*{-17bp}
    \fontseries{b}\hei\xiaosan[1.5]\csname sdu@title@font\endcsname
 %   \interlinepenalty\@M
    #1\par\nobreak}
    \vspace*{17bp}}
 %    \end{macrocode}
+%
 % 英文章名，不会生成实际的标题，只是为了生成英文目录。
 %    \begin{macrocode}
 \newcommand\echapter{%
@@ -2026,7 +2031,7 @@
   \sdu@secretyear年%
  \else
   \ifsdu@doctor\sdu@secretlevel@public\fi%
-  \ifsdu@master\sdu@secretlevel@public\fi%
+  %\ifsdu@master\sdu@secretlevel@public\fi%%硕士不用显示公开字样
  \fi}
 \cdate{\CJK@todaybig@short}
 \edate{\ifcase \month \or January\or February\or March\or April\or May%
@@ -2162,8 +2167,8 @@
 %    \begin{macrocode}
 \newcommand{\sdu@cover@thesistitle@mk}{%
 \begin{tabular*}{\textwidth}{p{0.2\textwidth}p{0.8\textwidth}}
-  {\fontseries{b}\song\xiaoer\ziju{0.1bp}\scalebox{0.9}[1]{\sdu@title@title\sdu@title@sep}} & {\fontseries{b}\hei\xiaoer\sdu@ctitle} \\
-                                 & {\fontseries{b}\hei\sffamily\sanhao\sdu@etitle}
+  {\fontseries{b}\song\xiaoer[2]\ziju{0.1bp}\scalebox{0.9}[1]{\sdu@title@title\sdu@title@sep}} & {\fontseries{b}\hei\xiaoer\sdu@ctitle} \\
+                                 & {\fontseries{b}\hei\sffamily\sanhao[2]\sdu@etitle}
 \end{tabular*}
 }
 %    \end{macrocode}
@@ -2269,18 +2274,19 @@
 % 章节名中英文用 Arial 字体，页码仍用 Times。
 % \begin{macro}{\tableofcontents}
 %    \begin{macrocode}
-% 目录环境，目录后的格式与目录不一样，且目录页码独立，因此将目录放在环境中。
+% 目录环境（已弃用，但是为了兼容老版本，留空）。
+% TODO: 如果把目录放到空的环境中，页码会跑到了页眉上？？？
 \newenvironment{contents}{%
-  \cleardoublepage% 目录前后都cleardoublepage
+}{%
+}
+% 目录生成命令。将原来contents环境中的代码放到命令开始处。
+% 为了兼容老版本，保留contents环境（但是 do nothing）。
+\renewcommand\tableofcontents{%
+  \cleardoublepage% 目录从奇数页开始
   \@mainmatterfalse
   \pagenumbering{roman}
   \pagestyle{sdu@headings}
   \normalsize%
-}{%
-  \cleardoublepage% <-- TODO：ugly code. 目录后的格式与目录环境紧耦合，very bad.
-  \pagenumbering{Roman}}
-% 目录生成命令。
-\renewcommand\tableofcontents{%
   \chapter[]{\contentsname}
   \@starttoc{toc}}
 \ifsdu@arialtoc
@@ -2314,7 +2320,7 @@
       \leavevmode
       \advance\leftskip\@tempdima
       \hskip -\leftskip
-      {\hei\csname sdu@toc@font\endcsname #1} % numberline is called here, and it uses \@tempdima
+      {\textbf{#1}} % numberline is called here, and it uses \@tempdima
       \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
       \nobreak{\normalfont\normalcolor #2}\par
       \penalty\@highpenalty
@@ -2326,35 +2332,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \begin{macro}{\tableofecontents}
 % 英文目录生成命令
+% \begin{macro}{\tableofecontents}
 %    \begin{macrocode}
 \newcommand\tableofecontents{%
   \chapter[]{\econtentsname}
   \@starttoc{toe}}
-\ifsdu@arialtoc
-  \def\sdu@toe@font{\sffamily}
-\fi
-\def\@pnumwidth{2em} % 这个参数没用了
-\def\@tocrmarg{2em}
-\def\@dotsep{1} % 目录点间的距离
-\def\@dottedtocline#1#2#3#4#5{%
-  \ifnum #1>\c@tocdepth \else
-    \vskip \z@ \@plus.2\p@
-    {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-    \parindent #2\relax\@afterindenttrue
-    \interlinepenalty\@M
-    \leavevmode
-    \@tempdima #3\relax
-    \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-    {\csname sdu@toe@font\endcsname #4}\nobreak
-    \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
-    \nobreak{\normalfont \normalcolor #5}%
-    \par}%
-  \fi}
-\newcommand*\l@esection{\@dottedtocline{1}{1.2em}{2.1em}}
-\newcommand*\l@esubsection{\@dottedtocline{2}{2em}{3em}}
-\newcommand*\l@esubsubsection{\@dottedtocline{3}{3.5em}{3.8em}}
 %</cls>
 %    \end{macrocode}
 % \end{macro}
@@ -2387,7 +2370,7 @@
      \setlength{\parsep}{0cm} % 段落间距
      \setlength{\itemsep}{0cm} % 标签间距
     \setlength{\listparindent}{0cm} % 段落缩进量
-    %\setlength{\topsep}{0pt} % 标签与上文的间距
+    \setlength{\topsep}{0pt} % 标签与上文的间距
    }}{\end{list}}
 %</cls>
 %    \end{macrocode}
@@ -2428,19 +2411,19 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% 修改默认的 thebibliography 环境，增加一些调整代码。正文部分用小四号字，1.5倍行距。调整参考文献序号靠左，而不是靠右。调整参考文献标签宽度，使得条目增多时仍能对齐。
+% 修改默认的 thebibliography 环境，增加一些调整代码。调整参考文献序号靠左，而不是靠右。调整参考文献标签宽度，使得条目增多时仍能对齐。
 % \begin{environment}{thebibliography}
 %    \begin{macrocode}
 \renewenvironment{thebibliography}[1]{%
    \chapter{\bibname}%
    \echapter{\ebibname}%
-   \xiaosi[1.5]
    \list{\@biblabel{\@arabic\c@enumiv}}%
         {\renewcommand{\makelabel}[1]{##1\hfill}
          \settowidth\labelwidth{1.1cm}
          \setlength{\labelsep}{0.4em}
          \setlength{\itemindent}{0pt}
          \setlength{\leftmargin}{\labelwidth+\labelsep}
+         \setlength{\topsep}{0pt}% 标签与上文的间距
          \addtolength{\itemsep}{-0.7em}
          \usecounter{enumiv}%
          \let\p@enumiv\@empty
@@ -2467,7 +2450,7 @@
 % \subsubsection{学位论文评阅及答辩情况表}
 % \label{sec:eval}
 % 本小节代码来自王伊蕾师姐，在此表示感谢。
-%
+% TODO：本表格样式和学校提供的尚有一定差距。
 % \begin{macro}{\makeevaluation}
 %    \begin{macrocode}
 %<*cls>
@@ -2476,12 +2459,13 @@
 \newcommand{\makeevaluation}{%
 \let\@tabular\old@tabular
 \begin{titlepage}
+ \vskip -20em
  \chapter[]{\sdu@evaluationtitle}
  \fangsong\sihao
  \begin{table}[ht]
-\begin{tabular*}{\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{4.2em-0.45pt}<{\centering}|p{4em}|p{4em}|p{4em}|m{4em}<{\centering}|p{4em}<{\centering}|}
+\parindent -0.05\textwidth\begin{tabular*}{1.1\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{5.5em}<{\centering}|p{4em}|p{4em}|p{5em}|m{4em}<{\centering}|p{5em}<{\centering}|}
 \hline
-\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{所~在~单~位} & 总体评价※ \\
+\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{\linebreak 所~在~单~位} & 总体评价\linebreak ※ \\
  \cline{2-8}
  & \multicolumn{2}{c|}{} &  & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
  \cline{2-8}

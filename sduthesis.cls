@@ -61,7 +61,7 @@
 \newif\ifsdu@arialtitle
 \DeclareOption{arialtitle}{\sdu@arialtitletrue}
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
-\ExecuteOptions{utf,arialtitle}
+\ExecuteOptions{utf}
 \ProcessOptions\relax
 \LoadClass[12pt,a4paper]{book}
 \ifsdu@master\relax\else
@@ -219,8 +219,8 @@
 \sdu@define@fontsize{bahao}{5bp}
 \renewcommand\normalsize{%
   \song\xiaosi[1.5]\selectfont
-  \abovedisplayskip=0bp \@plus 2bp \@minus 2bp
-  \abovedisplayshortskip=0bp \@plus 2bp \@minus 2bp
+  \abovedisplayskip=10bp \@plus 2bp \@minus 2bp
+  \abovedisplayshortskip=10bp \@plus 2bp \@minus 2bp
   \belowdisplayskip=\abovedisplayskip
   \belowdisplayshortskip=\abovedisplayshortskip}
 \AtBeginDvi{\special{papersize=\the\paperwidth,\the\paperheight}}
@@ -384,8 +384,10 @@
   \def\sdu@title@font{\sffamily}
 \fi
 \renewcommand\chapter{%
-  \if@openright\cleardoublepage\else\clearpage\fi\phantomsection%
-  \global\@topnum\z@%
+  \ifsdu@doctor\if@openright\cleardoublepage\else\clearpage\fi%
+  \else\clearpage\fi%
+ \phantomsection%
+ \global\@topnum\z@%
   \@afterindenttrue%
   \secdef\@chapter\@schapter}
 \def\@chapter[#1]#2{%
@@ -404,6 +406,7 @@
 \def\@makechapterhead#1{%
   {\parindent \z@ \centering
     \fontseries{b}\hei\xiaosan[1.5]\csname sdu@title@font\endcsname
+    \vspace*{-17bp}
     \ifnum \c@secnumdepth >\m@ne
        \if@mainmatter
           \@chapapp\hskip1em
@@ -417,6 +420,7 @@
 }
 \def\@makeschapterhead#1{%
   {\parindent \z@ \centering
+    \vspace*{-17bp}
    \fontseries{b}\hei\xiaosan[1.5]\csname sdu@title@font\endcsname
    #1\par\nobreak}
    \vspace*{17bp}}
@@ -559,8 +563,8 @@
 }
 \newcommand{\sdu@cover@thesistitle@mk}{%
 \begin{tabular*}{\textwidth}{p{0.2\textwidth}p{0.8\textwidth}}
-  {\fontseries{b}\song\xiaoer\ziju{0.1bp}\scalebox{0.9}[1]{\sdu@title@title\sdu@title@sep}} & {\fontseries{b}\hei\xiaoer\sdu@ctitle} \\
-                                 & {\fontseries{b}\hei\sffamily\sanhao\sdu@etitle}
+  {\fontseries{b}\song\xiaoer[2]\ziju{0.1bp}\scalebox{0.9}[1]{\sdu@title@title\sdu@title@sep}} & {\fontseries{b}\hei\xiaoer\sdu@ctitle} \\
+                                 & {\fontseries{b}\hei\sffamily\sanhao[2]\sdu@etitle}
 \end{tabular*}
 }
 \newcommand{\sdu@cover@authorinfo@mk}{%
@@ -609,15 +613,14 @@
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{2}
 \newenvironment{contents}{%
-  \cleardoublepage% 目录前后都cleardoublepage
+}{%
+}
+\renewcommand\tableofcontents{%
+  \cleardoublepage% 目录从奇数页开始
   \@mainmatterfalse
   \pagenumbering{roman}
   \pagestyle{sdu@headings}
   \normalsize%
-}{%
-  \cleardoublepage% <-- TODO：ugly code. 目录后的格式与目录环境紧耦合，very bad.
-  \pagenumbering{Roman}}
-\renewcommand\tableofcontents{%
   \chapter[]{\contentsname}
   \@starttoc{toc}}
 \ifsdu@arialtoc
@@ -651,7 +654,7 @@
       \leavevmode
       \advance\leftskip\@tempdima
       \hskip -\leftskip
-      {\hei\csname sdu@toc@font\endcsname #1} % numberline is called here, and it uses \@tempdima
+      {\textbf{#1}} % numberline is called here, and it uses \@tempdima
       \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
       \nobreak{\normalfont\normalcolor #2}\par
       \penalty\@highpenalty
@@ -663,29 +666,6 @@
 \newcommand\tableofecontents{%
   \chapter[]{\econtentsname}
   \@starttoc{toe}}
-\ifsdu@arialtoc
-  \def\sdu@toe@font{\sffamily}
-\fi
-\def\@pnumwidth{2em} % 这个参数没用了
-\def\@tocrmarg{2em}
-\def\@dotsep{1} % 目录点间的距离
-\def\@dottedtocline#1#2#3#4#5{%
-  \ifnum #1>\c@tocdepth \else
-    \vskip \z@ \@plus.2\p@
-    {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
-    \parindent #2\relax\@afterindenttrue
-    \interlinepenalty\@M
-    \leavevmode
-    \@tempdima #3\relax
-    \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-    {\csname sdu@toe@font\endcsname #4}\nobreak
-    \leaders\hbox{$\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$}\hfill
-    \nobreak{\normalfont \normalcolor #5}%
-    \par}%
-  \fi}
-\newcommand*\l@esection{\@dottedtocline{1}{1.2em}{2.1em}}
-\newcommand*\l@esubsection{\@dottedtocline{2}{2em}{3em}}
-\newcommand*\l@esubsubsection{\@dottedtocline{3}{3.5em}{3.8em}}
 \newenvironment{denotation}[1][2.5cm]{
   \chapter[]{\sdu@denotation@name}% no tocline
   \noindent\begin{list}{}%
@@ -699,7 +679,7 @@
      \setlength{\parsep}{0cm} % 段落间距
      \setlength{\itemsep}{0cm} % 标签间距
     \setlength{\listparindent}{0cm} % 段落缩进量
-    %\setlength{\topsep}{0pt} % 标签与上文的间距
+    \setlength{\topsep}{0pt} % 标签与上文的间距
    }}{\end{list}}
 \let\sdu@appendix\appendix
 \renewenvironment{appendix}{%
@@ -718,13 +698,13 @@
 \renewenvironment{thebibliography}[1]{%
    \chapter{\bibname}%
    \echapter{\ebibname}%
-   \xiaosi[1.5]
    \list{\@biblabel{\@arabic\c@enumiv}}%
         {\renewcommand{\makelabel}[1]{##1\hfill}
          \settowidth\labelwidth{1.1cm}
          \setlength{\labelsep}{0.4em}
          \setlength{\itemindent}{0pt}
          \setlength{\leftmargin}{\labelwidth+\labelsep}
+         \setlength{\topsep}{0pt}% 标签与上文的间距
          \addtolength{\itemsep}{-0.7em}
          \usecounter{enumiv}%
          \let\p@enumiv\@empty
@@ -743,12 +723,13 @@
 \newcommand{\makeevaluation}{%
 \let\@tabular\old@tabular
 \begin{titlepage}
+ \vskip -20em
  \chapter[]{\sdu@evaluationtitle}
  \fangsong\sihao
  \begin{table}[ht]
-\begin{tabular*}{\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{4.2em-0.45pt}<{\centering}|p{4em}|p{4em}|p{4em}|m{4em}<{\centering}|p{4em}<{\centering}|}
+\parindent -0.05\textwidth\begin{tabular*}{1.1\textwidth}{|p{1em}<{\centering}|m{2em}<{\centering}|m{5.5em}<{\centering}|p{4em}|p{4em}|p{5em}|m{4em}<{\centering}|p{5em}<{\centering}|}
 \hline
-\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{所~在~单~位} & 总体评价※ \\
+\multirow{6}{1em}{\tabincell{c}{\\ \\ 论\\ 文\\ 评\\ 阅\\ 人}} & \multicolumn{2}{c|}{\tabincell{c}{姓\qquad名}} & 专业技术职\quad\quad务 & 是否博导（硕导） & \multicolumn{2}{c|}{\linebreak 所~在~单~位} & 总体评价\linebreak ※ \\
  \cline{2-8}
  & \multicolumn{2}{c|}{} &  & \rule{0pt}{22pt} & \multicolumn{2}{c|}{} &  \\
  \cline{2-8}
